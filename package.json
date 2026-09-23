@@ -1,0 +1,31 @@
+{
+  "name": "music-of-the-spheres",
+  "version": "1.0.0",
+  "description": "Music of the spheres: a live orrery where each planet sings a tone that follows its speed around the Sun, as Kepler described in Harmonices Mundi, played with Web Audio.",
+  "repository": "github:evoluteur/music-of-the-spheres",
+  "homepage": "https://evoluteur.github.io/music-of-the-spheres/",
+  "copyright": "(c) 2026 Olivier Giulieri",
+  "author": "Olivier Giulieri (https://evoluteur.github.io/)",
+  "license": "MIT",
+  "keywords": [
+    "music-of-the-spheres",
+    "musica-universalis",
+    "harmony-of-the-spheres",
+    "kepler",
+    "harmonices-mundi",
+    "pythagoras",
+    "planets",
+    "orrery",
+    "solar-system",
+    "orbits",
+    "sonification",
+    "webaudio",
+    "audio",
+    "sound",
+    "meditation",
+    "esoterica",
+    "svg",
+    "pwa",
+    "javascript"
+  ]
+}

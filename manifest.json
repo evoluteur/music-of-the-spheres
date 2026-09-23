@@ -1,0 +1,24 @@
+{
+  "name": "Music of the Spheres",
+  "short_name": "Spheres",
+  "description": "Music of the spheres: a live orrery where each planet sings a tone that follows its speed around the Sun, as Kepler described in Harmonices Mundi, played with Web Audio.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1a212d",
+  "theme_color": "#1a212d",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

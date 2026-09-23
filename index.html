@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music of the Spheres</title>
+    <meta
+      name="description"
+      content="Music of the spheres: hear the planets sing as they orbit the Sun. Each planet's tone rises and falls with its speed, as Kepler described in Harmonices Mundi. A live orrery with Web Audio. Free, works offline."
+    />
+    <meta name="author" content="Olivier Giulieri" />
+    <link rel="canonical" href="https://evoluteur.github.io/music-of-the-spheres/" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <meta name="theme-color" content="#1a212d" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Overpass"
+    />
+    <link id="omg-core-css" rel="stylesheet" href="css/core.css" />
+    <link id="omg-theme-css" rel="stylesheet" href="css/themes/dark/dark.css" />
+    <link id="omg-density-css" rel="stylesheet" href="css/densities.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/spheres.css" />
+
+    <script src="js/omg.js"></script>
+    <script src="js/spheres-data.js"></script>
+    <script src="js/spheres.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        addEventListener("load", () =>
+          navigator.serviceWorker.register("sw.js"),
+        );
+      }
+    </script>
+  </head>
+
+  <body
+    onload="
+      setupPage('home');
+      initSpheres();
+    "
+    id="omg-body"
+  >
+    <div id="omg-header">
+      <h1>Music of the Spheres</h1>
+      <div id="omg-header-tools">
+        <div id="omg-theme-picker"></div>
+        <a
+          id="omg-github"
+          href="https://github.com/evoluteur/music-of-the-spheres"
+          target="_blank"
+          rel="noopener"
+          title="Music of the Spheres on GitHub"
+          aria-label="Music of the Spheres on GitHub"
+          ><svg viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+            /></svg
+        ></a>
+      </div>
+    </div>
+    <noscript
+      ><p class="tagline">
+        Music of the Spheres draws and plays in the browser, so it needs
+        JavaScript. Enable it to listen, or read
+        <a href="about.html">about the music of the spheres</a>.
+      </p></noscript
+    >
+    <h2>Hear the planets sing</h2>
+    <div class="content">
+      <p class="tagline">
+        In 1619 Johannes Kepler set out to hear the harmony of the heavens. He
+        gave every planet a voice that rises as it speeds up near the Sun and
+        falls as it slows down far from it. Here the planets move on their
+        real orbits, from today's positions, and sing Kepler's way. Press
+        <strong>Listen</strong>. Curious about the idea? Read
+        <a href="about.html">about the music of the spheres</a>.
+      </p>
+
+      <div class="layout">
+        <div class="stage">
+          <div id="orrery" class="canvas-box"></div>
+          <p class="note"><span id="date"></span></p>
+          <div class="panel choir">
+            <h3>The choir</h3>
+            <div id="voices"></div>
+          </div>
+        </div>
+
+        <div class="side">
+          <div class="panel">
+            <h3>Listen</h3>
+            <div class="btns">
+              <button type="button" id="sound" aria-pressed="false">Listen</button>
+              <button type="button" id="pause" class="ghost">Pause</button>
+              <button type="button" id="today" class="ghost">Today</button>
+            </div>
+            <div class="ctl" style="margin-top: 12px">
+              <label for="speed">Time</label
+              ><span class="val" id="speed-val"></span>
+              <input type="range" id="speed" min="0" max="8" step="1" />
+            </div>
+            <div class="ctl">
+              <label for="volume">Volume</label
+              ><span class="val" id="volume-val"></span>
+              <input type="range" id="volume" min="0" max="100" step="1" />
+            </div>
+            <div
+              class="chips"
+              id="voice-chips"
+              role="group"
+              aria-label="Timbre"
+            ></div>
+          </div>
+
+          <div class="panel">
+            <h3>Planets</h3>
+            <div
+              class="chips"
+              id="planet-chips"
+              role="group"
+              aria-label="Planets that sing"
+            ></div>
+            <p class="note">
+              Kepler knew six planets. Add Uranus and Neptune to hear the
+              rest of the choir.
+            </p>
+          </div>
+
+          <div class="panel">
+            <h3>View</h3>
+            <div
+              class="chips"
+              id="scale-chips"
+              role="group"
+              aria-label="Distance scale"
+            ></div>
+            <label class="opt"
+              ><input type="checkbox" id="l-labels" /> Planet names</label
+            >
+            <label class="opt"
+              ><input type="checkbox" id="l-apsides" /> Perihelion and
+              aphelion</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="panel wide-table">
+        <h3>Kepler's intervals</h3>
+        <p class="note">
+          How much faster each planet moves at its closest to the Sun than at
+          its farthest, as an interval: the range its voice slides over in
+          one orbit. The ratio is computed from today's orbits; Kepler worked
+          from Tycho Brahe's observations and heard slightly different
+          intervals in places.
+        </p>
+        <div class="table-scroll">
+          <table class="kepler">
+            <thead>
+              <tr>
+                <th>Planet</th>
+                <th>Eccentricity</th>
+                <th>Fastest ÷ slowest</th>
+                <th>Nearest interval</th>
+                <th>Kepler heard</th>
+              </tr>
+            </thead>
+            <tbody id="kepler-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p><a href="about.html">About the music of the spheres</a></p>
+        <p>
+          Orbital elements from NASA JPL's
+          <a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html"
+            >Approximate Positions of the Planets</a
+          >.
+        </p>
+        <p>
+          The code of this page is
+          <a href="https://github.com/evoluteur/music-of-the-spheres"
+            >Open source</a
+          >
+          with MIT license.
+        </p>
+        <p>
+          Had fun browsing the app?
+          <a href="https://github.com/sponsors/evoluteur"
+            >Buy me a coffee by becoming a sponsor</a
+          >.
+        </p>
+        <p>
+          You may also like
+          <a
+            href="https://evoluteur.github.io/healing-frequencies/"
+            target="_blank"
+            rel="noopener"
+            >Healing Frequencies</a
+          >,
+          <a
+            href="https://evoluteur.github.io/tibetan-singing-bowls/"
+            target="_blank"
+            rel="noopener"
+            >Tibetan Singing Bowls</a
+          >, and
+          <a
+            href="https://evoluteur.github.io/cymatics/"
+            target="_blank"
+            rel="noopener"
+            >Cymatics</a
+          >. See them all on
+          <a
+            href="https://evoluteur.github.io/esoterica.html"
+            target="_blank"
+            rel="noopener"
+            >Esoterica</a
+          >.
+        </p>
+        <p class="copyright">
+          &#169; 2026
+          <a href="https://evoluteur.github.io/">Olivier Giulieri</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

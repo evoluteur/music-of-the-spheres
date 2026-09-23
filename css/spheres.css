@@ -1,0 +1,149 @@
+.canvas-box {
+  background-color: #0b0e1a;
+  border: 3px solid var(--card-border);
+  border-radius: 10px;
+  overflow: hidden;
+  line-height: 0;
+}
+.canvas-box svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.canvas-box svg:hover {
+  fill: none;
+}
+.stage > .note {
+  margin: 10px 2px 0;
+  font-variant-numeric: tabular-nums;
+}
+#date {
+  font-size: 1.15em;
+  color: var(--card-strong);
+}
+.dot {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: baseline;
+}
+
+/* The choir: one row per singing planet */
+.voice {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 2px 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 0.9em;
+  font-variant-numeric: tabular-nums;
+}
+.voice:last-child {
+  border-bottom: none;
+}
+.voice .dot {
+  margin: 0;
+}
+.voice .pn {
+  color: var(--card-strong);
+}
+.voice .nn {
+  min-width: 5.2em;
+  text-align: right;
+}
+.voice .hz {
+  min-width: 5.6em;
+  text-align: right;
+  opacity: 0.75;
+}
+.voice .bar {
+  grid-column: 2 / -1;
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--card-border);
+  margin: 2px 0 2px;
+}
+.voice .bar i {
+  position: absolute;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+}
+#planet-chips .dot {
+  width: 0.6em;
+  height: 0.6em;
+}
+
+/* Kepler's table */
+.wide-table {
+  max-width: 1000px;
+}
+.table-scroll {
+  overflow-x: auto;
+}
+table.kepler {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.88em;
+}
+table.kepler th {
+  text-align: left;
+  font-weight: normal;
+  opacity: 0.7;
+  padding: 4px 8px;
+  border-bottom: 2px solid var(--card-border);
+  white-space: nowrap;
+}
+table.kepler td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--card-border);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.dimmed {
+  opacity: 0.6;
+}
+
+/* keep the title clear of the theme toggle and GitHub link on phones */
+@media only screen and (max-width: 560px) {
+  #omg-header h1 {
+    padding-right: 205px;
+    font-size: 1.4rem;
+  }
+}
+
+/* Fixed row geometry, so the choir panel keeps the same height while the
+   notes change (sharp and flat signs come from fallback fonts with taller
+   line boxes, and a long note could otherwise wrap). */
+.voice {
+  grid-template-rows: 1.4em 12px;
+  line-height: 1.4em;
+  height: calc(1.4em + 12px + 14px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.voice > span:not(.dot):not(.bar) {
+  white-space: nowrap;
+  overflow: hidden;
+  height: 1.4em;
+}
+.voice .bar {
+  height: 4px;
+  align-self: center;
+  overflow: visible;
+}
+.voice .dot {
+  align-self: center;
+  height: 0.7em;
+}
+
+/* The choir sits under the orrery, one planet per row */
+.stage > .panel.choir {
+  margin-top: 14px;
+}
